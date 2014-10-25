@@ -36,9 +36,9 @@ namespace ImagineCup.Quantum
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            backSound = Loader.LoadSoundMp3("back");
+           // backSound = Loader.LoadSoundMp3("back");
 
-            MusicController.playBackSong(backSound);
+           // MusicController.playBackSong(backSound);
             base.Initialize();
         }
 
