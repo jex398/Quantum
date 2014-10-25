@@ -3,6 +3,8 @@
 *.DS_Store
 
 #Visual Studio files
+*.sln
+*.csproj
 *.pidb
 *.userprefs
 *.[Oo]bj
