@@ -1,7 +1,10 @@
 ﻿using ImagineCup.Quantum.Controller;
+using ImagineCup.Quantum.Model;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
+using System;
+using System.Collections.Generic;
 
 namespace ImagineCup.Quantum
 {
@@ -12,16 +15,12 @@ namespace ImagineCup.Quantum
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
-
-        
-
-        Song backSound = null;
-
-
+        List<GameObject> objects;
+        Physics phys;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            objects = new List<GameObject>();
             Content.RootDirectory = "Content";
         }
 
@@ -35,10 +34,29 @@ namespace ImagineCup.Quantum
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-           // backSound = Loader.LoadSoundMp3("back");
-
-           // MusicController.playBackSong(backSound);
+            TestObject sun = new TestObject();
+            sun.m_mass = 300000;
+            sun.m_x = 200;
+            sun.m_y = 200;
+            sun.m_a_x = 0;
+            sun.m_a_y = 0;
+            sun.m_radius = 1;
+            for (int i = 1; i < 100; i++)
+            {
+                TestObject planet = new TestObject();
+                planet.m_mass = 1;
+                planet.m_x = 200;
+                planet.m_y = 700/i;
+                planet.m_a_x = 0;
+                planet.m_a_y = 0;
+                planet.m_speed_x = 0.1;
+                planet.m_speed_y = 0;
+                planet.m_radius = 1;
+                objects.Add(planet);
+            }
+            objects.Add(sun);
+            
+            phys = new Physics(objects);
             base.Initialize();
         }
 
@@ -71,7 +89,13 @@ namespace ImagineCup.Quantum
         protected override void Update(GameTime gameTime)
         {
             // TODO: Add your update logic here
-
+            int milis_curr = gameTime.ElapsedGameTime.Milliseconds;
+            Console.Out.WriteLine(milis_curr);
+            if (milis_curr > 10)
+            {
+                phys.calculatePhysics();
+               
+            }
             base.Update(gameTime);
         }
 
@@ -82,9 +106,12 @@ namespace ImagineCup.Quantum
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
             // TODO: Add your drawing code here
+            foreach (GameObject planet in objects)
+                planet.draw(spriteBatch);
 
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }

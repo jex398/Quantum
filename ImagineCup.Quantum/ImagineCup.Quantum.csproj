@@ -40,6 +40,7 @@
     <Compile Include="Controller\Physics.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Model\GameObject.cs" />
+    <Compile Include="Model\TestObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.Designer.cs" />
